@@ -7,7 +7,7 @@
 					h3.comment__owner Имя комментатора
 					.comment__lifetime
 						span Час назад
-					commentsPopularityControl
+					commentRating
 				.comment__reply
 					button.comment__reply-btn Ответить
 			p.comment__text Здесь будет текст комментария. Длинный такой текст. И комментарий, наверняка, будет интересным и без орфографических ошибок. 
@@ -19,7 +19,7 @@
 <script>
 export default {
 	components: {
-		commentsPopularityControl: () => import ('./commentsPopularityControl')
+		commentRating: () => import ('./commentRating')
 	}
 }
 </script>
