@@ -14,12 +14,42 @@ export default {
 </script>
 
 <style lang="postcss">
+@import "normalize.css";
+@import url('https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&display=swap&subset=cyrillic');
+
+	html {
+		font-size: 16px;
+	}
+
+	body {		
+		font-family: 'PT Sans', sans-serif;
+	}
+
+	h1, h2, h3, h4, h5, h6, p {
+		padding: 0;
+		margin: 0;
+	}
+
 	.container {
-		width: 90%;
+		width: 70%;
 		margin: 0 auto;
 	}
 
 	h1 {
 		color: #3541c2
 	}
+
+	ul,li {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+
+	button {
+		padding: 0;
+		border: none;
+		background-color: transparent;
+		cursor: pointer;
+	}
+
 </style>

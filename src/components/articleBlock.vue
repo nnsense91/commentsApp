@@ -1,6 +1,6 @@
 <template lang="pug">
 	article.article
-		h1.article__title Title
+		h1.article__title Article Title
 		.article__date
 			span 01/01/2014
 		p.article__text 
@@ -9,15 +9,20 @@
 			br
 			br
 			| Justo dignissim quisque dui porttitor mauris suscipit magna venenatis, montes netus leo nullam integer semper ultrices sem cursus, luctus molestie risus dolor sit fames convallis. Ullamcorper malesuada natoque curabitur est praesent platea dis vel, dictumst scelerisque consequat ligula maecenas nisl mattis mi egestas, purus augue porttitor aliquet vulputate risus vivamus. Morbi nullam enim cum urna dolor mus, aliquam lorem fermentum aliquet potenti varius cubilia, suscipit risus velit iaculis ligula. Commodo eu dictumst mus placerat vel duis, ultricies at nec felis lectus rhoncus, curabitur ad habitasse ligula quis. Torquent mi purus ullamcorper semper sodales penatibus fermentum diam pellentesque velit, proin erat dis ornare nascetur nisl bibendum dui euismod, cursus molestie lacus felis luctus turpis adipiscing dolor neque.
-			| Facilisi pellentesque maecenas tortor commodo per lacinia felis elementum, ultricies metus viverra vitae hendrerit at torquent, class lacus sit quisque aliquam turpis primis. Porta penatibus mollis condimentum sed sem duis maecenas potenti vulputate nisi id, litora dignissim nostra nullam lacinia magnis aliquam etiam ac. Torquent ridiculus placerat arcu cum nulla mollis at ullamcorper, blandit mus tempor facilisis curae ac augue proin pretium, taciti scelerisque pellentesque lorem sollicitudin elit penatibus. Eleifend est lobortis pellentesque sodales amet enim arcu dignissim vivamus, ultrices fringilla rhoncus nascetur eu sit fames quisque, turpis senectus montes ridiculus purus egestas facilisis ligula molestie, viverra auctor scelerisque placerat proin tellus fermentum. Tellus senectus faucibus platea ridiculus maecenas pulvinar quisque ante scelerisque, leo diam lectus rutrum curabitur accumsan magna potenti molestie, cras dictum adipiscing posuere risus dignissim sociis iaculis.
+			| Facilisi pellentesque maecenas tortor commodo per lacinia felis elementum, ultricies metus viverra vitae hendrerit at torquent, class lacus sit quisque aliquam turpis primis. Porta penatibus mollis condimentum sed sem duis maecenas potenti vulputate nisi id, litora dignissim nostra nullam lacinia magnis aliquam etiam ac. Torquent ridiculus placerat arcu cum nulla mollis at ullamcorper, blandit mus tempor facilisis curae ac augue proin pretium, taciti scelerisque pellentesque lorem sollicitudin elit penatibus. Eleifend est lobortis pellentesque sodales amet enim arcu dignissim vivamus, ultrices fringilla rhoncus nascetur eu sit fames quisque, turpis senectus montes ridiculus purus egestas facilisis ligula molestie, viverra auctor scelerisque placerat proin tellus fermentum. Tellus senectus faucibus platea ridiculus maecenas pulvinar quisque ante scelerisque, leo diam lectus rutrum curabitur accumsan magna potenti molestie, cras dictum adipiscing posuere risus dignissim sociis iaculis.		
 </template>
 
 <script>
 export default {
-	data() {
-		return {
-			
-		}
-	}
 }
 </script>
+
+<style lang="postcss" scoped>
+	.article {
+		padding: 1em 0 1em;
+	}
+
+	.article__date {
+		padding: 1em 0 1em;
+	}
+</style>
