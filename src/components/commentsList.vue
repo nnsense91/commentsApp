@@ -1,9 +1,10 @@
 <template lang="pug">
 	ul.comments__list
-		li.comments__item
-			commentsItem(
-				@addNewRootComment="addNewRootComment"
-			)
+		commentsItem(
+			v-for="comment in comments.children"
+			:comment="comment"
+			:key="comment.id"
+		)
 </template>
 
 <script>
@@ -11,10 +12,10 @@ export default {
 	components: {
 		commentsItem: () => import ('./commentsItem')
 	},
+	props: {
+		comments: Object
+	},
 	methods: {
-		addNewRootComment() {
-			this.$emit("addNewRootComment");
-		}
 	}
 }
 </script>

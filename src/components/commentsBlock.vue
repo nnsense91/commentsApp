@@ -2,27 +2,26 @@
 	.comments
 		h2.comments__title Комментарии:
 		commentsList(
-			@addNewRootComment="addModeOnHanlde"
+			:comments="comments"
 		)
-		commentsAddNew(v-if="isAddModeOn")
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
 	components: {
 		commentsList: () => import ('./commentsList'),
 		commentsAddNew: () => import ('./commentsAddNew')
 	},
-	data() {
-		return {
-			isAddModeOn: false
-		}
-	},
 	methods: {
-		addModeOnHanlde() {
-			!this.isAddModeOn ? this.isAddModeOn = true : false;
-		}
-	}
+	},
+	computed: {
+    ...mapState("comments", {
+      comments: state => state.comments
+    })
+  },
+
 }
 </script>
 

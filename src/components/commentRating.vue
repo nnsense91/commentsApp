@@ -2,10 +2,18 @@
 	.comment__rating
 		.comment__rating-block
 			button(type="button").comment__rating-increase +
-		.comment__rating-block.comment__rating-value 5
+		.comment__rating-block.comment__rating-value {{rating}}
 		.comment__rating-block
 			button(type="button").comment__rating-reduce -
 </template>
+
+<script>
+export default {
+	props: {
+		rating: Number
+	}
+}
+</script>
 
 <style lang="postcss" scoped>
 	.comment__rating {

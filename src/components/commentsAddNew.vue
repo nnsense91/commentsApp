@@ -1,21 +1,56 @@
 <template lang="pug">
 	.new-comment
+		pre {{comment}}
 		form.new-comment__form
 			h2.new-comment__title Добавить комментарий
 			.new-comment__content
 				.new-comment__form-row
 					label(for="name").new-comment__label Имя
-					input(type="text").new-comment__input#name
+					input(type="text" v-model="comment.author").new-comment__input#name
 				.new-comment__form-row
 					label(for="email").new-comment__label E-mail
-					input(type="e-mail").new-comment__input#email
+					input(type="e-mail" v-model="comment.email").new-comment__input#email
 				.new-comment__form-row
 					label(for="text").new-comment__label Текст комментария
-					textArea.new-comment__text#text
+					textarea(v-model="comment.text").new-comment__text#text
 				.new-comment__form-row
 					label.new-comment__label
-					button(type="submit").new-comment__submit Добавить комментарий
+					button(type="submit" @click.prevent="addNewComment").new-comment__submit Добавить комментарий
 </template>
+
+<script>
+import { mapActions } from 'vuex';
+
+let uniqId = 10;
+
+export default {
+	data() {
+		return {
+			comment: {
+				id: 0,
+				AddReply: false,
+				author: "",
+				email: "",
+				creationTime: "",
+				rating: 0,
+				text: "",
+				children: []
+			}
+		}
+	},
+	props: {
+		targetId: Number
+	},
+	methods: {
+		...mapActions('comments',["addComment"]),
+		addNewComment() {
+			this.comment.id = uniqId;
+			this.addComment([this.comment, this.targetId]);
+			uniqId++;
+		}
+	}
+}
+</script>
 
 <style lang="postcss" scoped>
 	.new-comment {

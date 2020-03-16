@@ -1,29 +1,47 @@
 <template lang="pug">
-	.comment
-		.comment__avatar
-		.comment__content
-			.comment__header
-				.comment__info
-					h3.comment__owner Имя комментатора
-					.comment__lifetime
-						span Час назад
-					commentRating
-				.comment__reply
-					button(@click="addNewRootComment").comment__reply-btn Ответить
-			p.comment__text Здесь будет текст комментария. Длинный такой текст. И комментарий, наверняка, будет интересным и без орфографических ошибок. 
-				| И здесь будет текст комментария. Длинный такой текст. И комментарий, наверняка, будет интересным и без орфографических ошибок.
-				| И здесь будет текст комментария. Длинный такой текст. И комментарий, наверняка, будет интересным и без орфографических ошибок.
-				| И здесь будет текст комментария. Длинный такой текст. И комментарий, наверняка, будет интересным и без орфографических ошибок.
+	li.comments__item
+		.comment
+			.comment__avatar
+			.comment__content
+				.comment__header
+					.comment__info
+						h3.comment__owner {{comment.author}}
+						.comment__lifetime
+							span {{comment.creationTime}}
+						commentRating(
+							:rating="comment.rating"
+						)
+					.comment__reply
+						button(@click="replyThisHandle").comment__reply-btn Ответить
+				p.comment__text {{comment.text}}
+		commentsAddNew(
+			v-if="comment.AddReply"
+			:targetId="comment.id"
+		)
+		ul.subcomment__list
+			commentsItem(
+				v-for="comment in comment.children"
+				:comment="comment"
+				:key="comment.id"
+			)
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
 	components: {
-		commentRating: () => import ('./commentRating')
+		commentRating: () => import ('./commentRating'),
+		commentsItem: () => import ('./commentsItem'),
+		commentsAddNew: () => import ('./commentsAddNew')
+	},
+	props: {
+		comment: Object
 	},
 	methods: {
-		addNewRootComment() {
-			this.$emit("addNewRootComment");
+		...mapActions("comments",['openForm']),
+		replyThisHandle() {
+			this.openForm(this.comment.id);
 		}
 	}
 }
@@ -32,7 +50,7 @@ export default {
 <style lang="postcss" scoped>
 
 	.comment {
-		padding: 8px;
+		padding: 40px 8px 0 8px;
 		display: flex;
 	}
 
@@ -85,6 +103,10 @@ export default {
 
 	.comment__text {
 		padding-top: 8px;
+	}
+
+	.subcomment__list {
+		margin-left: 120px;
 	}
 
 
