@@ -1,0 +1,76 @@
+<template lang="pug">
+	.new-comment
+		form.new-comment__form
+			h2.new-comment__title Добавить комментарий
+			.new-comment__content
+				.new-comment__form-row
+					label(for="name").new-comment__label Имя
+					input(type="text").new-comment__input#name
+				.new-comment__form-row
+					label(for="email").new-comment__label E-mail
+					input(type="e-mail").new-comment__input#email
+				.new-comment__form-row
+					label(for="text").new-comment__label Текст комментария
+					textArea.new-comment__text#text
+				.new-comment__form-row
+					label.new-comment__label
+					button(type="submit").new-comment__submit Добавить комментарий
+</template>
+
+<style lang="postcss" scoped>
+	.new-comment {
+		padding: 32px 0;
+	}
+
+	.new-comment__content {
+		width: 100%;
+		padding: 16px;
+	}
+
+	.new-comment__form {
+		position: relative;
+		width: 100%;
+		border: 1px solid #777;
+	}
+
+	.new-comment__title {
+		position: absolute;
+		top: -10px;
+		left: 13px;
+
+		padding: 0 3px;
+		font-size: 16px;
+		background-color: #fff;
+	}
+
+	.new-comment__form-row {
+		display: flex;
+		width: 100%;
+
+		&:not(:first-child) {
+			margin-top: 10px;
+		}
+	}
+
+	.new-comment__label {
+		width: 20%;
+	}
+
+	.new-comment__input {
+		display: block;
+		width: 25%;
+	}
+
+	.new-comment__text {
+		width: 50%;
+		min-height: 100px;
+		resize: none;
+	}
+
+	.new-comment__submit {
+		padding: 4px 8px;
+		border-radius: 2px;
+		background-color: #3541c2;
+		color: #fff;
+	}
+</style>

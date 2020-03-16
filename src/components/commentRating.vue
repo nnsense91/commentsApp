@@ -10,15 +10,16 @@
 <style lang="postcss" scoped>
 	.comment__rating {
 		display: flex;
-		border: 1px solid black;
+		border: 1px solid #777;
 		height: 20px;
+		border-radius: 2px;
 	}
 
 	.comment__rating-block {
 		width: 20px;
 		height: 20px;
 		text-align: center;
-		background-color: #ccc;
+		background-color: #ddd;
 
 		>button {
 			width: 100%;
@@ -27,8 +28,8 @@
 	}
 
 	.comment__rating-value {
-		border-left: 1px solid black;
-		border-right: 1px solid black;
+		border-left: 1px solid #777;
+		border-right: 1px solid #777;
 		width: 30px;
 	}
 

@@ -36,7 +36,7 @@ export default {
 	}
 
 	h1 {
-		color: #3541c2
+		color: #3541c2;
 	}
 
 	ul,li {
@@ -50,6 +50,7 @@ export default {
 		border: none;
 		background-color: transparent;
 		cursor: pointer;
+		outline: none;
 	}
 
 </style>

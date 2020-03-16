@@ -19,10 +19,15 @@ export default {
 
 <style lang="postcss" scoped>
 	.article {
-		padding: 1em 0 1em;
+		padding: 16px 0 16px;
 	}
 
 	.article__date {
-		padding: 1em 0 1em;
+		padding: 16px 0 16px;
+
+		>span {
+			font-size: 12px;
+			color: #777;
+		}
 	}
 </style>

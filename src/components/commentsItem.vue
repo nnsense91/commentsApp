@@ -9,7 +9,7 @@
 						span Час назад
 					commentRating
 				.comment__reply
-					button.comment__reply-btn Ответить
+					button(@click="addNewRootComment").comment__reply-btn Ответить
 			p.comment__text Здесь будет текст комментария. Длинный такой текст. И комментарий, наверняка, будет интересным и без орфографических ошибок. 
 				| И здесь будет текст комментария. Длинный такой текст. И комментарий, наверняка, будет интересным и без орфографических ошибок.
 				| И здесь будет текст комментария. Длинный такой текст. И комментарий, наверняка, будет интересным и без орфографических ошибок.
@@ -20,25 +20,30 @@
 export default {
 	components: {
 		commentRating: () => import ('./commentRating')
+	},
+	methods: {
+		addNewRootComment() {
+			this.$emit("addNewRootComment");
+		}
 	}
 }
 </script>
 
 <style lang="postcss" scoped>
+
 	.comment {
-		padding: 0.5em;
+		padding: 8px;
 		display: flex;
 	}
 
 	.comment__content {
 		display: flex;
 		flex-direction: column;
-		margin-left: 1em;
-		width: 80%;
+		margin-left: 16px;
 	}
 
 	.comment__avatar {
-		width: 100px;
+		min-width: 100px;
 		height: 100px;
 		background-image: url('../images/default_avatar_community.png');
 		background-repeat: no-repeat;
@@ -68,7 +73,8 @@ export default {
 		align-items: center;
 
 		>span {
-			font-size: 0.7em;
+			color: #777;
+			font-size: 12px;
 		}
 	}
 
@@ -78,7 +84,7 @@ export default {
 	}
 
 	.comment__text {
-		padding-top: 0.5em;
+		padding-top: 8px;
 	}
 
 
