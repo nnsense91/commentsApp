@@ -1,6 +1,5 @@
 <template lang="pug">
 	.new-comment
-		pre {{comment}}
 		form.new-comment__form
 			h2.new-comment__title Добавить комментарий
 			.new-comment__content
@@ -28,7 +27,7 @@ export default {
 		return {
 			comment: {
 				id: 0,
-				AddReply: false,
+				addReply: false,
 				author: "",
 				email: "",
 				creationTime: "",

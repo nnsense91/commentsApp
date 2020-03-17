@@ -15,7 +15,7 @@
 						button(@click="replyThisHandle").comment__reply-btn Ответить
 				p.comment__text {{comment.text}}
 		commentsAddNew(
-			v-if="comment.AddReply"
+			v-if="comment.addReply"
 			:targetId="comment.id"
 		)
 		ul.subcomment__list
@@ -55,6 +55,7 @@ export default {
 	}
 
 	.comment__content {
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 		margin-left: 16px;
