@@ -27,6 +27,7 @@ export default {
 		return {
 			comment: {
 				id: 0,
+				depth: 1,
 				addReply: false,
 				author: "",
 				email: "",

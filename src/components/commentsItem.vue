@@ -11,6 +11,7 @@
 						commentRating(
 							:rating="comment.rating"
 						)
+					.depth {{comment.depth}}
 					.comment__reply
 						button(@click="replyThisHandle").comment__reply-btn Ответить
 				p.comment__text {{comment.text}}
