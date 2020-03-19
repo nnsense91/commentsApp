@@ -20,7 +20,7 @@
 <script>
 import { mapActions } from 'vuex';
 
-let uniqId = 10;
+let uniqId = 1;
 
 export default {
 	data() {
@@ -45,8 +45,13 @@ export default {
 		...mapActions('comments',["addComment"]),
 		addNewComment() {
 			this.comment.id = uniqId;
+			this.comment.creationTime = this.addCreationTime();
 			this.addComment([this.comment, this.targetId]);
 			uniqId++;
+		},
+		addCreationTime() {
+			const now = new Date;
+			return now.getTime()
 		}
 	}
 }

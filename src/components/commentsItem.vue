@@ -9,9 +9,9 @@
 						.comment__lifetime
 							span {{comment.creationTime}}
 						commentRating(
-							:rating="comment.rating"
+							:commentRating="comment.rating"
+							:commentId="comment.id"
 						)
-					.depth {{comment.depth}}
 					.comment__reply
 						button(@click="replyThisHandle").comment__reply-btn Ответить
 				p.comment__text {{comment.text}}

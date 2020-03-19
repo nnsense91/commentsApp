@@ -35,8 +35,14 @@ export default {
 				arr.forEach(element => {
 					if (element.id === targetId) {
 						comment.depth = element.depth + 1;
-						element.children.push(comment);
-						element.addReply = false;
+						
+						if (comment.depth <= 3) {
+							element.children.push(comment);
+							element.addReply = false;
+						} else {
+							arr.push(comment);
+							element.addReply = false;
+						}
 					} else if (element.children !== undefined) {
 						setCommentPosition(element.children);
 					}
@@ -49,6 +55,23 @@ export default {
 			} else {
 				setCommentPosition(state.comments.children);
 			}
+		},
+		SET_RATING(state, [commentId, actionType]) {
+			const setIncrease = (arr) => {
+				arr.forEach(element => {
+					if (element.id === commentId) {
+						if (actionType === "increase") {
+							element.rating++;
+						} else if (actionType === "reduce") {
+							element.rating--;
+						}
+					} else {
+						setIncrease(element.children);
+					}
+				});
+			}
+
+			setIncrease(state.comments.children)
 		}
 	},
 	actions: {
@@ -56,7 +79,10 @@ export default {
 			store.commit("ADD_FORM_OPEN", commentId);
 		},
 		addComment(store, [comment, targetId]) {
-			store.commit("ADD_COMMENT", [comment, targetId])
+			store.commit("ADD_COMMENT", [comment, targetId]);
+		},
+		changeRating(store, [commentId, actionType]) {
+			store.commit("SET_RATING", [commentId, actionType]);
 		}
 	}
 }

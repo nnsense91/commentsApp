@@ -1,16 +1,28 @@
 <template lang="pug">
 	.comment__rating
 		.comment__rating-block
-			button(type="button").comment__rating-increase +
-		.comment__rating-block.comment__rating-value {{rating}}
+			button(type="button" @click="increaseCurrentRating").comment__rating-increase +
+		.comment__rating-block.comment__rating-value {{commentRating}}
 		.comment__rating-block
-			button(type="button").comment__rating-reduce -
+			button(type="button" @click="reduceCurrentRating").comment__rating-reduce -
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
 	props: {
-		rating: Number
+		commentRating: Number,
+		commentId: Number
+	},
+	methods: {
+		...mapActions('comments',["changeRating"]),
+		increaseCurrentRating() {
+			this.changeRating([this.commentId, "increase"]);
+		},
+		reduceCurrentRating() {
+			this.changeRating([this.commentId, "reduce"]);
+		}
 	}
 }
 </script>
