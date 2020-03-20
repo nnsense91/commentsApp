@@ -31,7 +31,7 @@ export default {
 									author: "Test",
 									email: "",
 									creationTime: 1584683400883,
-									rating: 0,
+									rating: -11,
 									text: "loremlorem",
 									children: []
 								}

@@ -20,7 +20,7 @@
 <script>
 import { mapActions } from 'vuex';
 
-let uniqId = 1;
+let uniqId = 4;
 
 export default {
 	data() {

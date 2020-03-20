@@ -1,8 +1,8 @@
 <template lang="pug">
 	li.comments__item
 		.comment
-			.comment__avatar
-			.comment__content
+			.comment__avatar(v-show="!isCommentBad")
+			.comment__content(:class="{comment__bad: this.comment.rating <= -10}")
 				.comment__header
 					.comment__info
 						h3.comment__owner {{comment.author}}
@@ -13,8 +13,9 @@
 							:commentId="comment.id"
 						)
 					.comment__reply
-						button(@click="replyThisHandle").comment__reply-btn Ответить
-				p.comment__text {{comment.text}}
+						button(v-if="!isCommentBad" @click="replyThisHandle").comment__reply-btn Ответить
+						button(v-if="isCommentBad" @click="showCommentHandle").comment__reply-btn Открыть комментарий
+				p(v-show="!isCommentBad").comment__text {{comment.text}}
 		commentsAddNew(
 			v-if="comment.addReply"
 			:targetId="comment.id"
@@ -33,7 +34,8 @@ import { mapActions } from 'vuex';
 export default {
 	data() {
 		return {
-			time: ""
+			time: "",
+			isShow: false
 		}
 	},
 	components: {
@@ -49,7 +51,7 @@ export default {
 		replyThisHandle() {
 			this.openForm(this.comment.id);
 		},
-		setLifeTime(commentCreationTime) {
+		lifeTimeHandle(commentCreationTime) {
 			const now = (new Date()).getTime();
 			const duration = now - this.comment.creationTime;
 			
@@ -60,10 +62,25 @@ export default {
 			} else {
 				this.time = `${Math.trunc(duration/86400000)} суток назад`;
 			}
+		},
+		showCommentHandle() {
+			this.isShow = true;
 		}
 	},
 	mounted() {
-		this.setLifeTime(this.comment.creationTime);
+		this.lifeTimeHandle(this.comment.creationTime);
+	},
+	computed: {
+		isCommentBad() {
+			// return (this.comment.rating > -10) ? false : true
+			if (this.comment.rating > -10) {
+				return false;
+			} else if (this.comment.rating <= -10 && this.isShow === true) {
+				return false;
+			} else {
+				return true;
+			}
+		}
 	}
 }
 </script>
@@ -80,6 +97,14 @@ export default {
 		display: flex;
 		flex-direction: column;
 		margin-left: 16px;
+		background-color: #eee;
+	}
+
+	.comment__bad {
+
+		& h3 {
+			opacity: 0.5;
+		}
 	}
 
 	.comment__avatar {

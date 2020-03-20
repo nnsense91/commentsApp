@@ -2,7 +2,7 @@
 	.comment__rating
 		.comment__rating-block
 			button(type="button" @click="increaseCurrentRating").comment__rating-increase +
-		.comment__rating-block.comment__rating-value {{commentRating}}
+		.comment__rating-block.comment__rating-value(:class="{comment__negative: commentRating <= -10}") {{commentRating}}
 		.comment__rating-block
 			button(type="button" @click="reduceCurrentRating").comment__rating-reduce -
 </template>
@@ -51,6 +51,10 @@ export default {
 		border-left: 1px solid #777;
 		border-right: 1px solid #777;
 		width: 30px;
+	}
+
+	.comment__negative {
+		color: #f00;
 	}
 
 </style>
