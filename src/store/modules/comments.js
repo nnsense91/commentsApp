@@ -3,7 +3,43 @@ export default {
 	state: {
 		comments: {
 			addReply: false,
-			children: []
+			children: [
+				{
+					id: 1,
+					depth: 1,
+					addReply: false,
+					author: "Test",
+					email: "",
+					creationTime: 1583673300883,
+					rating: 0,
+					text: "loremlorem",
+					children: [
+						{
+							id: 2,
+							depth: 2,
+							addReply: false,
+							author: "Test",
+							email: "",
+							creationTime: 1584673300883,
+							rating: 0,
+							text: "loremlorem",
+							children: [
+								{
+									id: 3,
+									depth: 3,
+									addReply: false,
+									author: "Test",
+									email: "",
+									creationTime: 1584683400883,
+									rating: 0,
+									text: "loremlorem",
+									children: []
+								}
+							]
+						}
+					]
+				}
+			]
 		}
 	},
 	mutations: {

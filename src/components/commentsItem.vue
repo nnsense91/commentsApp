@@ -7,7 +7,7 @@
 					.comment__info
 						h3.comment__owner {{comment.author}}
 						.comment__lifetime
-							span {{comment.creationTime}}
+							span {{time}}
 						commentRating(
 							:commentRating="comment.rating"
 							:commentId="comment.id"
@@ -31,6 +31,11 @@
 import { mapActions } from 'vuex';
 
 export default {
+	data() {
+		return {
+			time: ""
+		}
+	},
 	components: {
 		commentRating: () => import ('./commentRating'),
 		commentsItem: () => import ('./commentsItem'),
@@ -43,7 +48,22 @@ export default {
 		...mapActions("comments",['openForm']),
 		replyThisHandle() {
 			this.openForm(this.comment.id);
+		},
+		setLifeTime(commentCreationTime) {
+			const now = (new Date()).getTime();
+			const duration = now - this.comment.creationTime;
+			
+			if (duration < 3600000)  {
+				this.time = `${Math.trunc(duration/60000)} мин назад`;
+			} else if (duration > 3600000 && duration < 86400000) {
+				this.time = `${Math.trunc(duration/3600000)} часов назад`;
+			} else {
+				this.time = `${Math.trunc(duration/86400000)} суток назад`;
+			}
 		}
+	},
+	mounted() {
+		this.setLifeTime(this.comment.creationTime);
 	}
 }
 </script>
