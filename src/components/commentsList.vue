@@ -13,6 +13,7 @@
 		commentsAddNew(
 			v-if="isOpenAddForm"
 			:targetId="comments.id"
+			@closeAddCommentForm="clearForm"
 		)
 </template>
 
@@ -37,6 +38,9 @@ export default {
 			window.scrollTo(0, document.body.scrollHeight);
 			this.activeId = -1;
 		},
+		clearForm() {
+			this.activeId = -2;
+		},
 		clickReplyHandle(commentId) {
 			this.activeId = commentId;
 		}
@@ -45,6 +49,8 @@ export default {
 		isOpenAddForm() {
 			if (this.activeId === -1) {
 				return true;
+			} else {
+				return false;
 			}
 		}
 	}
@@ -53,7 +59,7 @@ export default {
 
 <style lang="postcss" scoped>
 	.comments__list {
-		padding-top: 20px;
+		padding: 40px 0 40px 0;
 	}
 
 	.comments__reply-block {
