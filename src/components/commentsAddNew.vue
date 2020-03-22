@@ -48,10 +48,14 @@ export default {
 			this.comment.creationTime = this.addCreationTime();
 			this.addComment([this.comment, this.targetId]);
 			uniqId++;
+			this.closeAddCommentForm();
 		},
 		addCreationTime() {
 			const now = new Date;
 			return now.getTime()
+		},
+		closeAddCommentForm() {
+			this.$emit("closeAddCommentForm");
 		}
 	}
 }

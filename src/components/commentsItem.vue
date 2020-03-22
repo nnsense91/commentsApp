@@ -1,8 +1,8 @@
 <template lang="pug">
 	li.comments__item
-		.comment
+		.comment(:class="{bad: this.comment.rating <= -10}")
 			.comment__avatar(v-show="!isCommentBad")
-			.comment__content(:class="{comment__bad: this.comment.rating <= -10}")
+			.comment__content
 				.comment__header
 					.comment__info
 						h3.comment__owner {{comment.author}}
@@ -13,29 +13,32 @@
 							:commentId="comment.id"
 						)
 					.comment__reply
-						button(v-if="!isCommentBad" @click="replyThisHandle").comment__reply-btn Ответить
+						button(v-if="!isCommentBad" @click="clickReply").comment__reply-btn Ответить
 						button(v-if="isCommentBad" @click="showCommentHandle").comment__reply-btn Открыть комментарий
 				p(v-show="!isCommentBad").comment__text {{comment.text}}
 		commentsAddNew(
-			v-if="comment.addReply"
+			v-if="isOpenAddForm"
 			:targetId="comment.id"
+			@closeAddCommentForm="closeAddCommentForm"
 		)
 		ul.subcomment__list
 			commentsItem(
 				v-for="comment in comment.children"
 				:comment="comment"
 				:key="comment.id"
+				@clickReply="clickReplyHandle"
+				:activeId="activeId"
+				@closeAddCommentForm="closeAddCommentForm"
 			)
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 
 export default {
 	data() {
 		return {
 			time: "",
-			isShow: false
+			isShowComment: false
 		}
 	},
 	components: {
@@ -44,13 +47,10 @@ export default {
 		commentsAddNew: () => import ('./commentsAddNew')
 	},
 	props: {
-		comment: Object
+		comment: Object,
+		activeId: Number
 	},
 	methods: {
-		...mapActions("comments",['openForm']),
-		replyThisHandle() {
-			this.openForm(this.comment.id);
-		},
 		lifeTimeHandle(commentCreationTime) {
 			const now = (new Date()).getTime();
 			const duration = now - this.comment.creationTime;
@@ -64,18 +64,31 @@ export default {
 			}
 		},
 		showCommentHandle() {
-			this.isShow = true;
+			this.isShowComment = true;
+		},
+		clickReply() {
+			this.$emit("clickReply", this.comment.id);
+		},
+		clickReplyHandle(commentId) {
+			this.$emit("clickReply", commentId);
+		},
+		closeAddCommentForm() {
+			this.$emit("closeAddCommentForm");
 		}
 	},
 	mounted() {
 		this.lifeTimeHandle(this.comment.creationTime);
 	},
 	computed: {
+		isOpenAddForm() {
+			if (this.comment.id === this.activeId) {
+				return true;
+			}
+		},
 		isCommentBad() {
-			// return (this.comment.rating > -10) ? false : true
 			if (this.comment.rating > -10) {
 				return false;
-			} else if (this.comment.rating <= -10 && this.isShow === true) {
+			} else if (this.comment.rating <= -10 && this.isShowComment === true) {
 				return false;
 			} else {
 				return true;
@@ -90,6 +103,9 @@ export default {
 	.comment {
 		padding: 40px 8px 0 8px;
 		display: flex;
+		border-radius: 5px;
+		box-shadow: 0 1px 1px 1px black;
+		margin-top: 10px;
 	}
 
 	.comment__content {
@@ -97,10 +113,10 @@ export default {
 		display: flex;
 		flex-direction: column;
 		margin-left: 16px;
-		background-color: #eee;
 	}
 
-	.comment__bad {
+	.bad {
+		padding: 10px 8px;
 
 		& h3 {
 			opacity: 0.5;
