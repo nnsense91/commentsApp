@@ -34,6 +34,9 @@ export default {
 		comments: Object
 	},
 	methods: {
+		/**
+			* Открывает форму для добавления корневого комментария
+		*/ 
 		newRootComment() {
 			try {
 				this.activeId = -1;
@@ -43,9 +46,16 @@ export default {
 				console.log(error.message);
 			}
 		},
+		/**
+			* Убирает форму добавления комментария
+		*/ 
 		clearForm() {
 			this.activeId = -2;
 		},
+		/**
+			* Определяет id комментария под которым нужно отрисовать форму добавления коммента
+			@param {Number} - id комментария, который вызывает этот метод
+		*/ 
 		clickReplyHandle(commentId) {
 			try {
 				this.activeId = commentId;
@@ -56,6 +66,10 @@ export default {
 		}
 	},
 	computed: {
+		/**
+			* Проверяет открыта ли форма добавления корневого комментария
+			@returns {Boolean}
+		*/ 
 		isOpenAddForm() {
 			if (this.activeId === -1) {
 				return true;

@@ -14,8 +14,8 @@
 						)
 					.comment__reply
 						button(v-if="!isCommentBad" @click="clickReply").comment__reply-btn Ответить
-						button(v-if="isHaveSubtree" @click="openSubtreeHandle").comment__showtree-btn {{isSubcommentTreeShow? "-": "+"}}
-						button(v-if="isCommentBad" @click="showCommentHandle").comment__reply-btn Открыть комментарий
+						button(v-if="isHaveSubtree" @click="toggleSubtreeHandle").comment__showtree-btn {{isSubcommentTreeShow? "-": "+"}}
+						button(v-if="isCommentBad" @click="showCommentHandle").comment__reply-btn Показать комментарий
 				.comment__text(v-show="!isCommentBad" v-html="addMarkdown(comment.text)")
 		commentsAddNew(
 			v-if="isOpenAddForm"
@@ -55,6 +55,10 @@ export default {
 		
 	},
 	methods: {
+		/**
+			* Определяет длительность существования комментария
+			@param {Number} - время создания комментария
+		*/ 
 		lifeTimeHandle(commentCreationTime) {
 			try {
 				const now = (new Date()).getTime();
@@ -72,20 +76,37 @@ export default {
 				alert("Ошибка! Не удалось посчитать дату написания комментария");
 			}
 		},
+		/**
+			* Позволяет показать комментарий, скрытый из за низкого рейтинга
+		*/ 
 		showCommentHandle() {
 			this.isShowComment = true;
 		},
+		/**
+		 	* Разворачивает дерево комментариев
+			* Передает в родительский компонент id текущего комментария, чтобы показать форму ввода нового комментария
+		*/ 
 		clickReply() {
 			this.isSubcommentTreeShow = true;
 			this.$emit("clickReply", this.comment.id);
 		},
+		/**
+			* Передает в родительский компонент id текущего комментария, чтобы показать форму ввода нового комментария
+			@param {Number} - id комментария из дочернего компонента
+		*/ 
 		clickReplyHandle(commentId) {
 			this.$emit("clickReply", commentId);
 		},
+		/**
+			* Вызывает метод родительского компонента, чтобы закрыть форму добавления нового комментария
+		*/
 		closeAddCommentForm() {
 			this.$emit("closeAddCommentForm");
 		},
-		openSubtreeHandle() {
+		/**
+			* Позволяет показать/скрыть дерево комментариев
+		*/
+		toggleSubtreeHandle() {
 			try {
 				this.isSubcommentTreeShow = !this.isSubcommentTreeShow;
 				if (this.isSubcommentTreeShow === false) {
@@ -96,8 +117,13 @@ export default {
 				alert("Ошибка! Не удалось показать дерево комментариев.")
 			}
 		},
+		/**
+			* Заменяет символы markdown на html-теги
+			@param {String} - текст комментария, введенного пользователем
+			@returns {Strung} - возвращает текст и html-теги при наличии спецсимволов в тексте
+		*/ 
 		addMarkdown(mdItem) {
-			//h
+			//заголовок
 			mdItem = mdItem.replace(/[\#]{6}(.+)/g, '<h6>$1</h6>');
 			mdItem = mdItem.replace(/[\#]{5}(.+)/g, '<h5>$1</h5>');
 			mdItem = mdItem.replace(/[\#]{4}(.+)/g, '<h4>$1</h4>');
@@ -105,15 +131,15 @@ export default {
 			mdItem = mdItem.replace(/[\#]{2}(.+)/g, '<h2>$1</h2>');
 			mdItem = mdItem.replace(/[\#]{1}(.+)/g, '<h1>$1</h1>');
 
-			//blockquote
-  		mdItem = mdItem.replace(/^\>(.+)/gm, '<blockquote>$1</blockquote>');
+			//цитата
+  			mdItem = mdItem.replace(/^\>(.+)/gm, '<blockquote>$1</blockquote>');
 
-			//ul
+			//список
 			mdItem = mdItem.replace(/^\s*\n\*/gm, '<ul>\n*');
 			mdItem = mdItem.replace(/^(\*.+)\s*\n([^\*])/gm, '$1\n</ul>\n\n$2');
 			mdItem = mdItem.replace(/^\*(.+)/gm, '<li>$1</li>');
 
-			//links
+			//ссылки
 			mdItem = mdItem.replace(/[\[]{1}([^\]]+)[\]]{1}[\(]{1}([^\)\"]+)(\"(.+)\")?[\)]{1}/g, '<a href="$2" title="$4">$1</a>');
 			
 			return mdItem;
@@ -134,11 +160,15 @@ export default {
 		try {
 			await this.lifeTimeHandle(this.comment.creationTime);
 		} catch(error) {
-			alert("Ошибка! Не удалось отобразить дату написания комментария.")
+			alert("Ошибка! Не удалось обновить дату написания комментария.")
 			console.log(error.message);
 		}
 	},
 	computed: {
+		/**
+			* Определяет наличие комментариев-потомков у текущего
+			@returns {Boolean}
+		*/ 
 		isHaveSubtree() {
 			if (this.comment.children.length === 0) {
 				return false
@@ -146,11 +176,19 @@ export default {
 				return true
 			}
 		},
+		/**
+			* Определяет нужно ли поместить форму ответа под текущим комментарием
+			@returns {Boolean}
+		*/ 
 		isOpenAddForm() {
 			if (this.comment.id === this.activeId) {
 				return true;
 			}
 		},
+		/**
+			* Определяет достаточно ли низкий рейтинг комментария чтобы его скрыть
+			@returns {Boolean}
+		*/ 
 		isCommentBad() {
 			if (this.comment.rating > -10) {
 				return false;
@@ -239,7 +277,7 @@ export default {
 	}
 
 	.comment__text {
-		padding-top: 8px;
+		padding: 8px 0 8px 0;
 		list-style: disc inside;
 	}
 

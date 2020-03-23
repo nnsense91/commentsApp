@@ -17,6 +17,9 @@ export default {
 	},
 	methods: {
 		...mapActions('comments',["changeRating"]),
+		/**
+			* Вызывает action в store чтобы увеличить рейтинг комментария на 1
+  		*/ 
 		async increaseCurrentRating() {
 			try {
 				await this.changeRating([this.commentId, "increase"]);
@@ -25,6 +28,9 @@ export default {
 				alert("Ошибка! Не удается увеличить рейтинг комментария.");
 			}
 		},
+		/**
+			* Вызывает action в store чтобы понизить рейтинг комментария на 1
+  		*/ 
 		async reduceCurrentRating() {
 			try {
 				await this.changeRating([this.commentId, "reduce"]);
@@ -38,6 +44,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+
 	.comment__rating {
 		display: flex;
 		border: 1px solid #777;

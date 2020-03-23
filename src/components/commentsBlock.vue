@@ -5,7 +5,7 @@
 		p(v-show="isLegendShow").comments__legend 
 			| #-заголовок h1 ... ###### - заголовок h6<br>
 			| > - цитата<br>
-			| * - пункт меню
+			| * - пункт меню<br>
 			| [link](https://google.com) - ссылка
 		commentsList(
 			:comments="comments"
@@ -34,6 +34,9 @@ export default {
 		}
 	},
 	computed: {
+		/**
+			* Возвращает данные из store
+		*/ 
     ...mapState("comments", {
       comments: state => state.comments
     })

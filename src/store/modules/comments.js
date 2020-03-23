@@ -8,31 +8,42 @@ export default {
 					id: 1,
 					depth: 1,
 					addReply: false,
-					author: "Автор1",
+					author: "Darth Vader",
 					email: "",
 					creationTime: 1583673300883,
 					rating: 0,
-					text: "loremlorem",
+					text: "1_Lorem ipsum dolor sit amet consectetur adipiscing elit ultricies lacus tempor primis, cursus malesuada vel commodo mi nascetur conubia litora ligula nunc, eros aenean eleifend etiam condimentum at sociosqu penatibus nullam tristique. Scelerisque suscipit nostra risus pulvinar imperdiet phasellus fringilla integer cursus cum lectus porta, sit commodo est lacus platea quam ante hendrerit laoreet vulputate urna. Est mauris cursus ultricies mollis commodo lectus neque, malesuada arcu mus ligula maecenas sed, dis porttitor torquent scelerisque metus iaculis. Platea habitasse nunc eget fringilla scelerisque cursus erat massa sociis ipsum vel penatibus, nascetur egestas elementum interdum senectus aliquam phasellus sem inceptos placerat luctus eros",
 					children: [
 						{
 							id: 2,
 							depth: 2,
 							addReply: false,
-							author: "Автор2",
+							author: "Agent Smith",
+							email: "",
+							creationTime: 1584573300883,
+							rating: 2,
+							text: "2_Lorem ipsum dolor sit amet consectetur adipiscing elit ultricies lacus tempor primis, cursus malesuada vel commodo mi nascetur conubia litora ligula nunc, eros aenean eleifend etiam condimentum at sociosqu penatibus nullam tristique. Scelerisque suscipit nostra risus pulvinar imperdiet phasellus fringilla integer cursus cum lectus porta, sit commodo est lacus platea quam ante hendrerit laoreet vulputate urna. Est mauris cursus ultricies mollis commodo lectus neque, malesuada arcu mus ligula maecenas sed, dis porttitor torquent scelerisque metus iaculis. Platea habitasse nunc eget fringilla scelerisque cursus erat massa sociis ipsum vel penatibus, nascetur egestas elementum interdum senectus aliquam phasellus sem inceptos placerat luctus eros",
+							children: []
+						},
+						{
+							id: 3,
+							depth: 2,
+							addReply: false,
+							author: "Volan de mort",
 							email: "",
 							creationTime: 1584673300883,
 							rating: 0,
-							text: "loremlorem",
+							text: "2_Lorem ipsum dolor sit amet consectetur adipiscing elit ultricies lacus tempor primis, cursus malesuada vel commodo mi nascetur conubia litora ligula nunc, eros aenean eleifend etiam condimentum at sociosqu penatibus nullam tristique. Scelerisque suscipit nostra risus pulvinar imperdiet phasellus fringilla integer cursus cum lectus porta, sit commodo est lacus platea quam ante hendrerit laoreet vulputate urna. Est mauris cursus ultricies mollis commodo lectus neque, malesuada arcu mus ligula maecenas sed, dis porttitor torquent scelerisque metus iaculis. Platea habitasse nunc eget fringilla scelerisque cursus erat massa sociis ipsum vel penatibus, nascetur egestas elementum interdum senectus aliquam phasellus sem inceptos placerat luctus eros",
 							children: [
 								{
-									id: 3,
+									id: 4,
 									depth: 3,
 									addReply: false,
-									author: "Автор3",
+									author: "Sauron",
 									email: "",
-									creationTime: 1584683400883,
+									creationTime: 1584974300883,
 									rating: -11,
-									text: "loremlorem",
+									text: "3_Lorem ipsum dolor sit amet consectetur adipiscing elit ultricies lacus tempor primis, cursus malesuada vel commodo mi nascetur conubia litora ligula nunc, eros aenean eleifend etiam condimentum at sociosqu penatibus nullam tristique. Scelerisque suscipit nostra risus pulvinar imperdiet phasellus fringilla integer cursus cum lectus porta, sit commodo est lacus platea quam ante hendrerit laoreet vulputate urna. Est mauris cursus ultricies mollis commodo lectus neque, malesuada arcu mus ligula maecenas sed, dis porttitor torquent scelerisque metus iaculis. Platea habitasse nunc eget fringilla scelerisque cursus erat massa sociis ipsum vel penatibus, nascetur egestas elementum interdum senectus aliquam phasellus sem inceptos placerat luctus eros",
 									children: []
 								}
 							]
@@ -43,6 +54,11 @@ export default {
 		}
 	},
 	mutations: {
+		/**
+			* Добавляет новый комментарий в state
+			@param {Object} - состояние компонента
+			@param {Array.<{comment: Object, targetId: Number}>} - массив с объектом данных добавляемого комментария и id комментария в свойство которого нужно добавить этот объект
+		*/ 
 		ADD_COMMENT(state, [comment, targetId]) {
 
 			const setCommentPosition = (arr) => {
@@ -70,6 +86,11 @@ export default {
 				setCommentPosition(state.comments.children);
 			}
 		},
+		/**
+			* Меняет рейтинг комментария в state
+			@param {Object} - состояние компонента
+			@param {Array.<{commentId: Number, actionType: String}>} - массив с id комментария в котором меняется рейтинг и вид действия
+		*/ 
 		SET_RATING(state, [commentId, actionType]) {
 			const setIncrease = (arr) => {
 				arr.forEach(element => {
@@ -89,6 +110,11 @@ export default {
 		}
 	},
 	actions: {
+		/**
+			* Вызывает мутацию которая добавит комментарий
+			@param {Object} - объект контекста, хранилище
+			@param {Array.<{comment: Object, targetId: Number}>} - массив с объектом данных добавляемого комментария и id комментария в свойство которого нужно добавить этот объект
+		*/ 
 		async addComment(store, [comment, targetId]) {
 			try {
 				await store.commit("ADD_COMMENT", [comment, targetId]);
@@ -97,6 +123,11 @@ export default {
 				alert("Ошибка! Не удалось добавить комментарий."); 
 			}
 		},
+		/**
+			* Вызывает мутацию которая поменяет рейтинг
+			@param {Object} - объект контекста, хранилище
+			@param {Array.<{commentId: Number, actionType: String}>} - массив с id комментария в котором меняется рейтинг и вид действия
+		*/ 
 		async changeRating(store, [commentId, actionType]) {
 			try {
 				store.commit("SET_RATING", [commentId, actionType]);

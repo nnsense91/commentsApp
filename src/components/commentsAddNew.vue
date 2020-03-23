@@ -65,6 +65,9 @@ export default {
 	},
 	methods: {
 		...mapActions('comments',["addComment"]),
+		/**
+			* Вызывает action в store чтобы добавить комментарий, присваивает уникальный id комментарию
+  		*/ 
 		async addNewComment() {
 			if (this.isFormValid) {
 				try {
@@ -85,6 +88,10 @@ export default {
 				this.checkValid("text");
 			}
 		},
+		/**
+			* Возвращает время в миллисекундах от 01.01.1970, 00.00.00 UTC
+			@returns {Number}
+  		*/ 
 		addCreationTime() {
 			const now = new Date;
 			return now.getTime();
@@ -92,6 +99,10 @@ export default {
 		closeAddCommentForm() {
 			this.$emit("closeAddCommentForm");
 		},
+		/**
+			* Валидация полей ввода нового комментария
+			@param {String} - id элемента DOM
+  		*/ 
 		checkValid(inputId) {
 			if (inputId === "name") {				
 				this.comment.author = this.comment.author.trim();
@@ -106,6 +117,11 @@ export default {
 			} else if (inputId === "email") {
 				this.comment.email = this.comment.email.trim();
 				
+				/**
+					* Проверка формата e-mail
+					@param {String} - данные введенные пользователем в поле ввода e-mail
+					@returns {Boolean} - результат проверки
+				*/ 
 				const validateEmail = email => {
 					const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -135,6 +151,9 @@ export default {
 		}
 	},
 	computed: {
+		/**
+			* Валидация формы
+		*/ 
 		isFormValid() {
 			if (this.formInputValid.name === true && this.formInputValid.email === true && this.formInputValid.text) {
 				return true;
