@@ -14,6 +14,7 @@
 						)
 					.comment__reply
 						button(v-if="!isCommentBad" @click="clickReply").comment__reply-btn Ответить
+						button(v-if="isHaveSubtree" @click="openSubtreeHandle").comment__showtree-btn {{isSubcommentTreeShow? "-": "+"}}
 						button(v-if="isCommentBad" @click="showCommentHandle").comment__reply-btn Открыть комментарий
 				p(v-show="!isCommentBad").comment__text {{comment.text}}
 		commentsAddNew(
@@ -23,6 +24,7 @@
 		)
 		ul.subcomment__list
 			commentsItem(
+				v-if="isSubcommentTreeShow"
 				v-for="comment in comment.children"
 				:comment="comment"
 				:key="comment.id"
@@ -38,7 +40,8 @@ export default {
 	data() {
 		return {
 			time: "",
-			isShowComment: false
+			isShowComment: false,
+			isSubcommentTreeShow: false
 		}
 	},
 	components: {
@@ -49,6 +52,7 @@ export default {
 	props: {
 		comment: Object,
 		activeId: Number
+		
 	},
 	methods: {
 		lifeTimeHandle(commentCreationTime) {
@@ -67,6 +71,7 @@ export default {
 			this.isShowComment = true;
 		},
 		clickReply() {
+			this.isSubcommentTreeShow = true;
 			this.$emit("clickReply", this.comment.id);
 		},
 		clickReplyHandle(commentId) {
@@ -74,12 +79,25 @@ export default {
 		},
 		closeAddCommentForm() {
 			this.$emit("closeAddCommentForm");
+		},
+		openSubtreeHandle() {
+			this.isSubcommentTreeShow = !this.isSubcommentTreeShow;
+			if (this.isSubcommentTreeShow === false) {
+				this.$emit("closeAddCommentForm");
+			}
 		}
 	},
 	mounted() {
 		this.lifeTimeHandle(this.comment.creationTime);
 	},
 	computed: {
+		isHaveSubtree() {
+			if (this.comment.children.length === 0) {
+				return false
+			} else {
+				return true
+			}
+		},
 		isOpenAddForm() {
 			if (this.comment.id === this.activeId) {
 				return true;
@@ -146,7 +164,7 @@ export default {
 
 	.comment__owner {
 		text-decoration: underline;
-		color: #3541c2
+		color: #3541c2;
 	}
 
 	.comment__lifetime {
@@ -157,6 +175,10 @@ export default {
 			color: #777;
 			font-size: 12px;
 		}
+	}
+
+	.comment__reply {
+		position: relative;
 	}
 
 	.comment__reply-btn {
@@ -170,6 +192,18 @@ export default {
 
 	.subcomment__list {
 		margin-left: 120px;
+	}
+
+	.comment__showtree-btn {
+		position: absolute;
+		right: -40px;
+
+		color: #fff;
+		background-color: #3541c2;
+		line-height: 0;
+		border-radius: 3px;
+		width: 20px;
+		height: 20px;
 	}
 
 
