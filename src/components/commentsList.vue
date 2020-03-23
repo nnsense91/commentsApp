@@ -35,14 +35,24 @@ export default {
 	},
 	methods: {
 		newRootComment() {
-			window.scrollTo(0, document.body.scrollHeight);
-			this.activeId = -1;
+			try {
+				this.activeId = -1;
+				window.scrollTo(0, document.body.scrollHeight);
+			} catch(error) {
+				alert("Ошибка! Не удается открыть форму создания комментария");
+				console.log(error.message);
+			}
 		},
 		clearForm() {
 			this.activeId = -2;
 		},
 		clickReplyHandle(commentId) {
-			this.activeId = commentId;
+			try {
+				this.activeId = commentId;
+			} catch (error) {
+				console.log(error.message);
+				alert("Ошибка! Не удается открыть форму ответа на комментарий");
+			}
 		}
 	},
 	computed: {

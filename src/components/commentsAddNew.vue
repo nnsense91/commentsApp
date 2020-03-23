@@ -6,12 +6,21 @@
 				.new-comment__form-row
 					label(for="name").new-comment__label Имя
 					input(type="text" v-model="comment.author" @blur="checkValid($event.target.id)").new-comment__input#name
+					validationError(
+						:error="errorMessage.name"
+					)
 				.new-comment__form-row
 					label(for="email").new-comment__label E-mail
 					input(type="e-mail" v-model="comment.email" @blur="checkValid($event.target.id)").new-comment__input#email
+					validationError(
+						:error="errorMessage.email"
+					)
 				.new-comment__form-row
 					label(for="text").new-comment__label Текст комментария
 					textarea(v-model="comment.text" @blur="checkValid($event.target.id)").new-comment__text#text
+					validationError(
+						:error="errorMessage.text"
+					)
 				.new-comment__form-row
 					label.new-comment__label
 					button(type="submit" @click.prevent="addNewComment").new-comment__submit Добавить комментарий
@@ -23,8 +32,16 @@ import { mapActions } from 'vuex';
 let uniqId = 4;
 
 export default {
+	components: {
+		validationError: () => import ('./commentsValidationError')
+	},
 	data() {
 		return {
+			errorMessage: {
+				name: "",
+				email: "",
+				text: ""
+			},
 			formInputValid: {
 				name: false,
 				email: false,
@@ -48,13 +65,20 @@ export default {
 	},
 	methods: {
 		...mapActions('comments',["addComment"]),
-		addNewComment() {
+		async addNewComment() {
 			if (this.isFormValid) {
-				this.comment.id = uniqId;
-				this.comment.creationTime = this.addCreationTime();
-				this.addComment([this.comment, this.targetId]);
-				uniqId++;
-				this.closeAddCommentForm();
+				try {
+					this.comment.id = uniqId;
+					this.comment.creationTime = this.addCreationTime();
+					await this.addComment([this.comment, this.targetId]);
+					uniqId++;
+				} catch(error) {
+					console.log(error.message);
+					alert("Ошибка! Не удалось добавить комментарий.");
+				} finally {
+					this.closeAddCommentForm();
+				}
+				
 			} else {
 				this.checkValid("name");
 				this.checkValid("email");
@@ -63,7 +87,7 @@ export default {
 		},
 		addCreationTime() {
 			const now = new Date;
-			return now.getTime()
+			return now.getTime();
 		},
 		closeAddCommentForm() {
 			this.$emit("closeAddCommentForm");
@@ -74,9 +98,10 @@ export default {
 
 				if (this.comment.author === "") {
 					this.formInputValid.name = false;
-					console.log("Поле 'Имя' обязательно к заполнению");
+					this.errorMessage.name = "Поле обязательно к заполнению";
 				} else {
 					this.formInputValid.name = true;
+					this.errorMessage.name = "";
 				}
 			} else if (inputId === "email") {
 				this.comment.email = this.comment.email.trim();
@@ -88,22 +113,23 @@ export default {
 				};
 
 				if (this.comment.email === "") {
-					console.log("Поле 'E-mail' обязательно к заполнению");
+					this.errorMessage.email = "Поле обязательно к заполнению";
 				} else if (validateEmail(this.comment.email)) {
 					this.formInputValid.email = true;
-					console.log("Корректно!");
+					this.errorMessage.email = "";
 				} else {
 					this.formInputValid.email = false;
-					console.log("Некорректный e-mail");
+					this.errorMessage.email = "Некорректный формат e-mail";
 				}
 			} else if (inputId === "text") {
 				this.comment.text = this.comment.text.trim();
 
 				if (this.comment.text === "") {
 					this.formInputValid.text = false;
-					console.log("Текст комментария не может быть пустым");
+					this.errorMessage.text = "Поле обязательно к заполнению";
 				} else {
 					this.formInputValid.text = true;
+					this.errorMessage.text = "";
 				}
 			}
 		}

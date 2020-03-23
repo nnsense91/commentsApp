@@ -1,0 +1,18 @@
+<template lang="pug">
+	p.error {{error}}
+</template>
+
+<script>
+export default {
+	props: {
+		error: String
+	}
+}
+</script>
+
+<style lang="postcss" scoped>
+	.error {
+		margin-left: 20px;
+		color: #f00;
+	}
+</style>

@@ -17,11 +17,21 @@ export default {
 	},
 	methods: {
 		...mapActions('comments',["changeRating"]),
-		increaseCurrentRating() {
-			this.changeRating([this.commentId, "increase"]);
+		async increaseCurrentRating() {
+			try {
+				await this.changeRating([this.commentId, "increase"]);
+			} catch(error) {
+				console.log(error.message);
+				alert("Ошибка! Не удается увеличить рейтинг комментария.");
+			}
 		},
-		reduceCurrentRating() {
-			this.changeRating([this.commentId, "reduce"]);
+		async reduceCurrentRating() {
+			try {
+				await this.changeRating([this.commentId, "reduce"]);
+			} catch (error) {
+				console.log(error.message);
+				alert("Ошибка! Не удается понизить рейтинг комментария.");
+			}
 		}
 	}
 }

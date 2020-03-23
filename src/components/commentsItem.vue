@@ -56,15 +56,20 @@ export default {
 	},
 	methods: {
 		lifeTimeHandle(commentCreationTime) {
-			const now = (new Date()).getTime();
-			const duration = now - this.comment.creationTime;
-			
-			if (duration < 3600000)  {
-				this.time = `${Math.trunc(duration/60000)} мин назад`;
-			} else if (duration > 3600000 && duration < 86400000) {
-				this.time = `${Math.trunc(duration/3600000)} часов назад`;
-			} else {
-				this.time = `${Math.trunc(duration/86400000)} суток назад`;
+			try {
+				const now = (new Date()).getTime();
+				const duration = now - this.comment.creationTime;
+				
+				if (duration < 3600000)  {
+					this.time = `${Math.trunc(duration/60000)} мин назад`;
+				} else if (duration > 3600000 && duration < 86400000) {
+					this.time = `${Math.trunc(duration/3600000)} часов назад`;
+				} else {
+					this.time = `${Math.trunc(duration/86400000)} суток назад`;
+				}
+			} catch (error) {
+				console.log(error.message);
+				alert("Ошибка! Не удалось посчитать дату написания комментария");
 			}
 		},
 		showCommentHandle() {
@@ -81,14 +86,24 @@ export default {
 			this.$emit("closeAddCommentForm");
 		},
 		openSubtreeHandle() {
-			this.isSubcommentTreeShow = !this.isSubcommentTreeShow;
-			if (this.isSubcommentTreeShow === false) {
-				this.$emit("closeAddCommentForm");
+			try {
+				this.isSubcommentTreeShow = !this.isSubcommentTreeShow;
+				if (this.isSubcommentTreeShow === false) {
+					this.$emit("closeAddCommentForm");
+				}
+			} catch(error) {
+				console.log(error.message);
+				alert("Ошибка! Не удалось показать дерево комментариев.")
 			}
 		}
 	},
-	mounted() {
-		this.lifeTimeHandle(this.comment.creationTime);
+	async mounted() {
+		try {
+			await this.lifeTimeHandle(this.comment.creationTime);
+		} catch(error) {
+			alert("Ошибка! Не удалось отобразить дату написания комментария.")
+			console.log(error.message);
+		}
 	},
 	computed: {
 		isHaveSubtree() {

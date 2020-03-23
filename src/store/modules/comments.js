@@ -89,11 +89,21 @@ export default {
 		}
 	},
 	actions: {
-		addComment(store, [comment, targetId]) {
-			store.commit("ADD_COMMENT", [comment, targetId]);
+		async addComment(store, [comment, targetId]) {
+			try {
+				await store.commit("ADD_COMMENT", [comment, targetId]);
+			} catch(error) {
+				console.log(error.message);
+				alert("Ошибка! Не удалось добавить комментарий."); 
+			}
 		},
-		changeRating(store, [commentId, actionType]) {
-			store.commit("SET_RATING", [commentId, actionType]);
+		async changeRating(store, [commentId, actionType]) {
+			try {
+				store.commit("SET_RATING", [commentId, actionType]);
+			} catch(error) {
+				console.log(error.message);
+				alert("Ошибка! Не удалось изменить рейтинг."); 
+			}
 		}
 	}
 }
