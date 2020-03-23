@@ -35,14 +35,9 @@ export default {
 		margin: 0 auto;
 	}
 
-	h1 {
-		color: #3541c2;
-	}
-
 	ul,li {
 		padding: 0;
 		margin: 0;
-		list-style: none;
 	}
 
 	button {

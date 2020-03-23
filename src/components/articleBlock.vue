@@ -22,6 +22,10 @@ export default {
 		padding: 16px 0 16px;
 	}
 
+	.article__title {
+		color: #3541c2;
+	}
+
 	.article__date {
 		padding: 16px 0 16px;
 

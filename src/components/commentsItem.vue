@@ -16,7 +16,7 @@
 						button(v-if="!isCommentBad" @click="clickReply").comment__reply-btn Ответить
 						button(v-if="isHaveSubtree" @click="openSubtreeHandle").comment__showtree-btn {{isSubcommentTreeShow? "-": "+"}}
 						button(v-if="isCommentBad" @click="showCommentHandle").comment__reply-btn Открыть комментарий
-				p(v-show="!isCommentBad").comment__text {{comment.text}}
+				.comment__text(v-show="!isCommentBad" v-html="addMarkdown(comment.text)")
 		commentsAddNew(
 			v-if="isOpenAddForm"
 			:targetId="comment.id"
@@ -95,9 +95,42 @@ export default {
 				console.log(error.message);
 				alert("Ошибка! Не удалось показать дерево комментариев.")
 			}
-		}
+		},
+		addMarkdown(mdItem) {
+			//h
+			mdItem = mdItem.replace(/[\#]{6}(.+)/g, '<h6>$1</h6>');
+			mdItem = mdItem.replace(/[\#]{5}(.+)/g, '<h5>$1</h5>');
+			mdItem = mdItem.replace(/[\#]{4}(.+)/g, '<h4>$1</h4>');
+			mdItem = mdItem.replace(/[\#]{3}(.+)/g, '<h3>$1</h3>');
+			mdItem = mdItem.replace(/[\#]{2}(.+)/g, '<h2>$1</h2>');
+			mdItem = mdItem.replace(/[\#]{1}(.+)/g, '<h1>$1</h1>');
+
+			//blockquote
+  		mdItem = mdItem.replace(/^\>(.+)/gm, '<blockquote>$1</blockquote>');
+
+			//ul
+			mdItem = mdItem.replace(/^\s*\n\*/gm, '<ul>\n*');
+			mdItem = mdItem.replace(/^(\*.+)\s*\n([^\*])/gm, '$1\n</ul>\n\n$2');
+			mdItem = mdItem.replace(/^\*(.+)/gm, '<li>$1</li>');
+
+			//links
+			mdItem = mdItem.replace(/[\[]{1}([^\]]+)[\]]{1}[\(]{1}([^\)\"]+)(\"(.+)\")?[\)]{1}/g, '<a href="$2" title="$4">$1</a>');
+			
+			return mdItem;
+		},
+	},
+	created() {
+		this.addMarkdown(this.comment.text);
 	},
 	async mounted() {
+		try {
+			await this.lifeTimeHandle(this.comment.creationTime);
+		} catch(error) {
+			alert("Ошибка! Не удалось отобразить дату написания комментария.")
+			console.log(error.message);
+		}
+	},
+	async updated() {
 		try {
 			await this.lifeTimeHandle(this.comment.creationTime);
 		} catch(error) {
@@ -132,6 +165,10 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+
+	.comments__item {
+		list-style: none;
+	}
 
 	.comment {
 		padding: 40px 8px 0 8px;
@@ -203,6 +240,11 @@ export default {
 
 	.comment__text {
 		padding-top: 8px;
+		list-style: disc inside;
+	}
+
+	.comment__text>li {
+		list-style: disc inside;
 	}
 
 	.subcomment__list {
