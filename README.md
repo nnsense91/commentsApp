@@ -4,7 +4,7 @@
 ##  Чтобы развернуть проект необходимо:
 ```sh
 $ git clone https://github.com/nnsense91/commentsApp.git
-$ cd ls-commentsApp
+$ cd commentsApp
 $ yarn
 ```
 
