@@ -29,7 +29,7 @@
 <script>
 import { mapActions } from 'vuex';
 
-let uniqId = 4;
+let uniqId = 5;
 
 export default {
 	components: {

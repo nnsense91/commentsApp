@@ -96,6 +96,7 @@ export default {
 				arr.forEach(element => {
 					if (element.id === commentId) {
 						if (actionType === "increase") {
+							console.log("increase");
 							element.rating++;
 						} else if (actionType === "reduce") {
 							element.rating--;
