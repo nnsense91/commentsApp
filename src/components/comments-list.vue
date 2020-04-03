@@ -20,65 +20,75 @@
 <script>
 
 export default {
+	components: {
+		commentsItem: () => import('./comments-item'),
+		commentsAddNew: () => import('./comments-addnew'),
+	},
+	props: {
+		comments: {
+			type: Object,
+			default() {
+				return {};
+			},
+		},
+	},
 	data() {
 		return {
 			addRootFormIsActive: false,
-			activeId: -1
-		}
+			activeId: -1,
+		};
 	},
-	components: {
-		commentsItem: () => import ('./commentsItem'),
-		commentsAddNew: () => import ('./commentsAddNew')
-	},
-	props: {
-		comments: Object
+	computed: {
+		/**
+			* Проверяет открыта ли форма добавления корневого комментария
+			@returns {Boolean}
+		*/
+		isOpenAddForm() {
+			if (this.activeId === -1) {
+				return true;
+			}
+			return false;
+		},
 	},
 	methods: {
 		/**
 			* Открывает форму для добавления корневого комментария
-		*/ 
+		*/
 		newRootComment() {
 			try {
 				this.activeId = -1;
 				window.scrollTo(0, document.body.scrollHeight);
-			} catch(error) {
-				alert("Ошибка! Не удается открыть форму создания комментария");
+			} catch (error) {
+				// Тут должно всплывать окно с ошибкой
+				// eslint-disable-next-line no-alert
+				alert('Ошибка! Не удается открыть форму создания комментария');
+				// eslint-disable-next-line no-console
 				console.log(error.message);
 			}
 		},
 		/**
 			* Убирает форму добавления комментария
-		*/ 
+		*/
 		clearForm() {
 			this.activeId = -2;
 		},
 		/**
 			* Определяет id комментария под которым нужно отрисовать форму добавления коммента
 			@param {Number} - id комментария, который вызывает этот метод
-		*/ 
+		*/
 		clickReplyHandle(commentId) {
 			try {
 				this.activeId = commentId;
 			} catch (error) {
+				// Тут должно всплывать окно с ошибкой
+				// eslint-disable-next-line no-console
 				console.log(error.message);
-				alert("Ошибка! Не удается открыть форму ответа на комментарий");
+				// eslint-disable-next-line no-alert
+				alert('Ошибка! Не удается открыть форму ответа на комментарий');
 			}
-		}
+		},
 	},
-	computed: {
-		/**
-			* Проверяет открыта ли форма добавления корневого комментария
-			@returns {Boolean}
-		*/ 
-		isOpenAddForm() {
-			if (this.activeId === -1) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
-}
+};
 </script>
 
 <style lang="postcss" scoped>

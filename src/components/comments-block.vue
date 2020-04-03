@@ -2,7 +2,7 @@
 	.comments
 		h2.comments__title Комментарии:
 		span(@mouseover="showLegendOn" @mouseleave="showLegendOff").comments__legend-link поддержка markdown
-		p(v-show="isLegendShow").comments__legend 
+		p(v-show="isLegendShow").comments__legend
 			| #-заголовок h1 ... ###### - заголовок h6<br>
 			| > - цитата<br>
 			| * - пункт меню<br>
@@ -17,13 +17,21 @@ import { mapState } from 'vuex';
 
 export default {
 	components: {
-		commentsList: () => import ('./commentsList'),
-		commentsAddNew: () => import ('./commentsAddNew')
+		commentsList: () => import('./comments-list'),
+		commentsAddNew: () => import('./comments-addnew'),
 	},
 	data() {
 		return {
-			isLegendShow: false
-		}
+			isLegendShow: false,
+		};
+	},
+	computed: {
+		/**
+			* Возвращает данные из store
+		*/
+		...mapState('comments', {
+			comments: (state) => state.comments,
+		}),
 	},
 	methods: {
 		showLegendOn() {
@@ -31,18 +39,9 @@ export default {
 		},
 		showLegendOff() {
 			this.isLegendShow = false;
-		}
+		},
 	},
-	computed: {
-		/**
-			* Возвращает данные из store
-		*/ 
-    ...mapState("comments", {
-      comments: state => state.comments
-    })
-  },
-
-}
+};
 </script>
 
 <style lang="postcss" scoped>
@@ -51,16 +50,16 @@ export default {
  }
 
  .comments__legend-link {
-	 cursor: pointer;
-	 font-style: italic;
-	 color: #888;
-	 border-bottom: dotted;
+	cursor: pointer;
+	font-style: italic;
+	color: #888;
+	border-bottom: dotted;
  }
 
  .comments__legend {
-	 width: 50%;
-	 padding: 20px 0 20px 0;
-	 border-radius: 5px;
-	 background-color: #ccc;
+	width: 50%;
+	padding: 20px 0 20px 0;
+	border-radius: 5px;
+	background-color: #ccc;
  }
 </style>

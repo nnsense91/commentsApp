@@ -12,35 +12,47 @@ import { mapActions } from 'vuex';
 
 export default {
 	props: {
-		commentRating: Number,
-		commentId: Number
+		commentRating: {
+			type: Number,
+			default: 0,
+		},
+		commentId: {
+			type: Number,
+			default: 0,
+		},
 	},
 	methods: {
-		...mapActions('comments',["changeRating"]),
+		...mapActions('comments', ['changeRating']),
 		/**
 			* Вызывает action в store чтобы увеличить рейтинг комментария на 1
-  		*/ 
+  		*/
 		async increaseCurrentRating() {
 			try {
-				await this.changeRating([this.commentId, "increase"]);
-			} catch(error) {
+				await this.changeRating([this.commentId, 'increase']);
+			} catch (error) {
+				// Здесь должно всплывать окно с ошибкой
+				// eslint-disable-next-line no-console
 				console.log(error.message);
-				alert("Ошибка! Не удается увеличить рейтинг комментария.");
+				// eslint-disable-next-line no-alert
+				alert('Ошибка! Не удается увеличить рейтинг комментария.');
 			}
 		},
 		/**
 			* Вызывает action в store чтобы понизить рейтинг комментария на 1
-  		*/ 
+  		*/
 		async reduceCurrentRating() {
 			try {
-				await this.changeRating([this.commentId, "reduce"]);
+				await this.changeRating([this.commentId, 'reduce']);
 			} catch (error) {
+				// Здесь должно всплывать окно с ошибкой
+				// eslint-disable-next-line no-console
 				console.log(error.message);
-				alert("Ошибка! Не удается понизить рейтинг комментария.");
+				// eslint-disable-next-line no-alert
+				alert('Ошибка! Не удается понизить рейтинг комментария.');
 			}
-		}
-	}
-}
+		},
+	},
+};
 </script>
 
 <style lang="postcss" scoped>

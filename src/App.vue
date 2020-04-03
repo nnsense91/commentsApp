@@ -7,10 +7,10 @@
 <script>
 export default {
 	components: {
-		articleBlock: () => import ('./components/articleBlock'),
-		commentsBlock: () => import ('./components/commentsBlock'),
-	}
-}
+		articleBlock: () => import('./components/article-block'),
+		commentsBlock: () => import('./components/comments-block'),
+	},
+};
 </script>
 
 <style lang="postcss">
@@ -21,7 +21,7 @@ export default {
 		font-size: 16px;
 	}
 
-	body {		
+	body {
 		font-family: 'PT Sans', sans-serif;
 	}
 

@@ -5,9 +5,12 @@
 <script>
 export default {
 	props: {
-		error: String
-	}
-}
+		error: {
+			type: String,
+			default: '',
+		},
+	},
+};
 </script>
 
 <style lang="postcss" scoped>
