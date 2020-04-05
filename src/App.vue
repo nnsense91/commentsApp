@@ -7,8 +7,8 @@
 <script>
 export default {
 	components: {
-		articleBlock: () => import('./components/article-block'),
-		commentsBlock: () => import('./components/comments-block'),
+		articleBlock: () => import('./components/articleBlock'),
+		commentsBlock: () => import('./components/commentsBlock'),
 	},
 };
 </script>

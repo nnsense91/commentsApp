@@ -17,8 +17,8 @@ import { mapState } from 'vuex';
 
 export default {
 	components: {
-		commentsList: () => import('./comments-list'),
-		commentsAddNew: () => import('./comments-addnew'),
+		commentsList: () => import('./commentsList'),
+		commentsAddNew: () => import('./commentsAddNew'),
 	},
 	data() {
 		return {

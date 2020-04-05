@@ -33,7 +33,7 @@ let uniqId = 5;
 
 export default {
 	components: {
-		validationError: () => import('./comments-error'),
+		validationError: () => import('./commentsValidationError'),
 	},
 	props: {
 		targetId: {

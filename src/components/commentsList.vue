@@ -21,8 +21,8 @@
 
 export default {
 	components: {
-		commentsItem: () => import('./comments-item'),
-		commentsAddNew: () => import('./comments-addnew'),
+		commentsItem: () => import('./commentsItem'),
+		commentsAddNew: () => import('./commentsAddNew'),
 	},
 	props: {
 		comments: {

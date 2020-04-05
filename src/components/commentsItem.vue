@@ -37,9 +37,9 @@
 <script>
 export default {
 	components: {
-		commentRating: () => import('./comment-rating'),
-		commentsItem: () => import('./comments-item'),
-		commentsAddNew: () => import('./comments-addnew'),
+		commentRating: () => import('./commentsRating'),
+		commentsItem: () => import('./commentsItem'),
+		commentsAddNew: () => import('./commentsAddNew'),
 	},
 	props: {
 		comment: {
