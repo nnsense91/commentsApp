@@ -80,7 +80,8 @@
   },
   "jest": {
 	"collectCoverage": true,
-    "collectCoverageFrom": ["**/src/components/*.{js,vue}", "!**/node_modules/**"],
+	"collectCoverageFrom": ["**/src/components/*.{js,vue}", "!**/node_modules/**"],
+	"coverageReporters": ["text"],
     "moduleFileExtensions": [
       "js",
       "vue"
