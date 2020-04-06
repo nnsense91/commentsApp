@@ -56,7 +56,6 @@ export default {
 			comment: {
 				id: 0,
 				depth: 1,
-				addReply: false,
 				author: '',
 				email: '',
 				creationTime: '',
@@ -74,8 +73,8 @@ export default {
 		isFormValid() {
 			if (
 				this.formInputValid.name === true
-        && this.formInputValid.email === true
-        && this.formInputValid.text
+				&& this.formInputValid.email === true
+				&& this.formInputValid.text
 			) {
 				return true;
 			}

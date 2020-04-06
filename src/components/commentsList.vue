@@ -34,7 +34,6 @@ export default {
 	},
 	data() {
 		return {
-			addRootFormIsActive: false,
 			activeId: -1,
 		};
 	},

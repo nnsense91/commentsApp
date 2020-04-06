@@ -13,9 +13,9 @@
 							:commentId="comment.id"
 						)
 					.comment__reply
-						button(v-if="!isCommentBad" @click="clickReply").comment__reply-btn Ответить
+						button(v-if="!isCommentBad" @click="clickReply").comment__reply-btn#reply Ответить
 						button(v-if="isHaveSubtree" @click="toggleSubtreeHandle").comment__showtree-btn {{isSubcommentTreeShow? "-": "+"}}
-						button(v-if="isCommentBad" @click="showCommentHandle").comment__reply-btn Показать комментарий
+						button(v-if="isCommentBad" @click="showCommentHandle").comment__reply-btn#show Показать комментарий
 				.comment__text(v-show="!isCommentBad" v-html="addMarkdown(comment.text)")
 		commentsAddNew(
 			v-if="isOpenAddForm"

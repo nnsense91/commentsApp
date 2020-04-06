@@ -3,12 +3,10 @@ export default {
 	namespaced: true,
 	state: {
 		comments: {
-			addReply: false,
 			children: [
 				{
 					id: 1,
 					depth: 1,
-					addReply: false,
 					author: 'Darth Vader',
 					email: '',
 					creationTime: 1583673300883,
@@ -18,7 +16,6 @@ export default {
 						{
 							id: 2,
 							depth: 2,
-							addReply: false,
 							author: 'Agent Smith',
 							email: '',
 							creationTime: 1584573300883,
@@ -29,7 +26,6 @@ export default {
 						{
 							id: 3,
 							depth: 2,
-							addReply: false,
 							author: 'Volan de mort',
 							email: '',
 							creationTime: 1584673300883,
@@ -39,7 +35,6 @@ export default {
 								{
 									id: 4,
 									depth: 3,
-									addReply: false,
 									author: 'Sauron',
 									email: '',
 									creationTime: 1584974300883,
@@ -70,10 +65,8 @@ export default {
 
 						if (comment.depth <= 3) {
 							element.children.push(comment);
-							element.addReply = false;
 						} else {
 							array.push(comment);
-							element.addReply = false;
 						}
 					} else if (element.children !== undefined) {
 						setCommentPosition(element.children);
@@ -83,7 +76,6 @@ export default {
 
 			if (targetId === undefined) {
 				state.comments.children.push(comment);
-				state.comments.addReply = false;
 			} else {
 				setCommentPosition(state.comments.children);
 			}
