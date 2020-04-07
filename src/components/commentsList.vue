@@ -9,7 +9,7 @@
 			@closeAddCommentForm="newRootComment"
 			@clickReply="clickReplyHandle"
 			:activeId="activeId"
-		)
+		)#item
 		commentsAddNew(
 			v-if="isOpenAddForm"
 			:targetId="comments.id"

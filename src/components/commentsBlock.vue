@@ -1,6 +1,6 @@
 <template lang="pug">
 	.comments
-		h2.comments__title Комментарии:
+		h2.comments__title {{comments.title}}
 		span(@mouseover="showLegendOn" @mouseleave="showLegendOff").comments__legend-link поддержка markdown
 		p(v-show="isLegendShow").comments__legend
 			| #-заголовок h1 ... ###### - заголовок h6<br>

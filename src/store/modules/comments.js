@@ -3,6 +3,7 @@ export default {
 	namespaced: true,
 	state: {
 		comments: {
+			title: 'Комментарии:',
 			children: [
 				{
 					id: 1,
@@ -48,6 +49,9 @@ export default {
 				},
 			],
 		},
+	},
+	getters: {
+		getcomments: (state) => state.comments,
 	},
 	mutations: {
 		/**

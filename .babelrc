@@ -3,8 +3,8 @@
     "test": {
       "presets": [
         ["env", { "targets": { "node": "current" }}]
-      ]
+      ],
+	  "plugins": ["dynamic-import-node", "transform-object-rest-spread"]
     }
   },
-  "plugins": ["dynamic-import-node", "transform-object-rest-spread"]
 }
