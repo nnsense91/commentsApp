@@ -33,6 +33,10 @@ describe('commentsAddNew', () => {
 		wrapper.find('#email').trigger('blur');
 		expect(wrapper.vm.formInputValid.email).toBe(false);
 
+		wrapper.find('#email').setValue('');
+		wrapper.find('#email').trigger('blur');
+		expect(wrapper.vm.formInputValid.email).toBe(false);
+
 		wrapper.find('#text').setValue('test');
 		wrapper.find('#text').trigger('blur');
 		expect(wrapper.vm.formInputValid.text).toBe(true);
