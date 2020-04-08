@@ -50,9 +50,6 @@ export default {
 			],
 		},
 	},
-	getters: {
-		getcomments: (state) => state.comments,
-	},
 	mutations: {
 		/**
 			* Добавляет новый комментарий в state
